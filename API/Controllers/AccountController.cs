@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace API.Controllers
-{    
+{
+    
     [ApiController]
     [Route("api/[controller]")]
-    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
@@ -20,8 +20,9 @@ namespace API.Controllers
         {
             _tokenService = tokenService;
             _userManager = userManager;
+
         }
-        
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -37,7 +38,7 @@ namespace API.Controllers
             }
             return Unauthorized();
         }
-        
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -56,7 +57,6 @@ namespace API.Controllers
                 Email = registerDto.Email,
                 UserName=registerDto.Username
             };
-
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if(result.Succeeded)
@@ -66,8 +66,10 @@ namespace API.Controllers
 
             return BadRequest (result.Errors);
         }
+
       
-        //[Authorize] using allow anon instead for ease of use
+        //[Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
