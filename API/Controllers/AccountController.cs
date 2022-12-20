@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace API.Controllers
-{
-    
+{    
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -20,7 +19,6 @@ namespace API.Controllers
         {
             _tokenService = tokenService;
             _userManager = userManager;
-
         }
         [AllowAnonymous]
         [HttpPost("login")]
@@ -57,6 +55,7 @@ namespace API.Controllers
                 Email = registerDto.Email,
                 UserName=registerDto.Username
             };
+            
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if(result.Succeeded)
@@ -66,9 +65,9 @@ namespace API.Controllers
 
             return BadRequest (result.Errors);
         }
-
       
-        [Authorize]
+        //[Authorize] using allow anon instead for ease of use
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
