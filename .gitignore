@@ -4,6 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 appsettings.json
+choppingblogs.db-shm
+choppingblogs.db-wal
 
 # User-specific files
 *.rsuser

@@ -1,0 +1,97 @@
+import { useState } from "react";
+import UploadImage from "./components/UploadImage";
+import { PostType, categoryType } from "./lib/types";
+
+export type CreatePostType = {
+  setUserPosts: React.Dispatch<React.SetStateAction<Array<PostType>>>;
+};
+
+export const CreatePost = ({ setUserPosts }: CreatePostType) => {
+  const [post, setPost] = useState<PostType>();
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setPost((prevState: any) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      setUserPosts!((prevState: any) => {
+        return [...prevState, post];
+      });
+      alert("Success");
+    } catch (error) {
+      console.log(error);
+      alert("error");
+    }
+  };
+
+  const options: categoryType[] = [
+    { name: "Fashion", value: "fashion" },
+    { name: "Culinary", value: "culinary" },
+    { name: "Music", value: "music" },
+    { name: "Technology", value: "technology" },
+  ];
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="w-screen h-screen flex flex-col items-center justify-start mt-5 bg-gray-50 mr-5"
+    >
+      {/* will have two sides, 1 text inputs, 1 image input using cloudinary*/}
+      <div className="w-full h-1/2 flex flex-col sm:flex-row">
+        {" "}
+        <div className="flex flex-col h-full w-1/2 ml-1 sm:ml-5 lg:items-center">
+          {" "}
+          <label className="text-lg">Post Title</label>
+          <input
+            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
+            type="text"
+            name="title"
+            value={post?.title}
+            onChange={handleChange}
+          />
+          <label className="text-lg">Post Image</label>
+          {/*Create cloudinary account and use cloudinary image upload tool*/}
+          <input
+            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
+            type="text"
+            name="image"
+            value={post?.image}
+            onChange={handleChange}
+          />
+          <label className="text-lg">Post Category</label>
+          {/* Should be a drop down selector, wait for PMS to give us what type of blog categorys */}
+          <select
+            name="category"
+            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
+            value={post?.category}
+            onChange={handleChange}
+          >
+            {options.map((option: categoryType) => {
+              return <option value={option.value}>{option.name}</option>;
+            })}
+          </select>
+        </div>
+        <div>{/* <UploadImage post={post!} /> */}</div>
+      </div>
+
+      <label className="text-lg">Post Content</label>
+      <textarea
+        className="resize-none lg:w-11/12 w-full h-full bg-white ring ring-slate-300 my-5"
+        name="content"
+        value={post?.content}
+        onChange={handleChange}
+      />
+      <button className="w-48 h-20 rounded-lg mt-5 mb-20 bg-slate-600 text-white">
+        Finish Editing
+      </button>
+    </form>
+  );
+};
+export default CreatePost;
