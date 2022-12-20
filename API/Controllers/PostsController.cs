@@ -1,6 +1,7 @@
 using Application.Posts;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -9,12 +10,13 @@ namespace API.Controllers
 {
     public class PostsController : BaseApiController
     {
+        
         [HttpGet] // GET /api/posts
         public async Task<ActionResult<List<Post>>> GetPosts()
         {
             return await Mediator.Send(new List.Query());
         }
-
+        [Authorize]
         [HttpGet("{id}")] // GET /api/posts/{id}
         public async Task<ActionResult<Post>> GetPost(Guid id)
         {
