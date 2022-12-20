@@ -9,22 +9,29 @@ namespace API.Controllers
 {
     public class PostsController : BaseApiController
     {
-        private readonly IMediator _mediator;
-        public PostsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [HttpGet] // GET /api/posts
         public async Task<ActionResult<List<Post>>> GetPosts()
         {
-            return await _mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")] // GET /api/posts/{id}
         public async Task<ActionResult<Post>> GetPost(Guid id)
         {
-            return Ok();
+            return await Mediator.Send(new Content.Query { Id = id });
+        }
+
+        [HttpPost] // POST /api/posts
+        public async Task<IActionResult> CreatePost(Post post)
+        {
+            return Ok(await Mediator.Send(new Create.Command { Post = post }));
+        }
+
+        [HttpPut("{id}")] // PUT /api/posts/{id}
+        public async Task<IActionResult> EditPost(Guid id, Post post)
+        {
+            post.Id = id;
+            return Ok(await Mediator.Send(new Edit.Command { Post = post }));
         }
     }
 }
