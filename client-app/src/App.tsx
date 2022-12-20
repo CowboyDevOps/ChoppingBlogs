@@ -5,12 +5,24 @@ import NavBar from "./NavBar";
 import { PostType, UserType } from "./lib/types";
 import Splash from "./Splash";
 import { Routes, Route } from "react-router-dom";
-import { homeRoute, feedRoute, profileRoute } from "./lib/routes";
+import {
+  homeRoute,
+  feedRoute,
+  profileRoute,
+  CreatePostRoute,
+} from "./lib/routes";
 import Feed from "./Feed";
 import { loren } from "./blogging-text/lorenIpsum";
 import bigDAWG from "./images/bigDAWG.jpeg";
 import defaultPhoto from "./images/defaultPhoto.jpeg";
 import UserProfile from "./UserProfile";
+import CreatePost from "./NewPost";
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 
 function App() {
   //if image === undefined, image = defaultPhoto
@@ -63,7 +75,7 @@ function App() {
       category: "Post",
     },
     {
-      id: 0,
+      id: 2,
       image: bigDAWG,
       author: "Dan Weiner",
       title: "Practice",
@@ -72,7 +84,6 @@ function App() {
       category: "Post",
     },
   ]);
-
   const [user, setUser] = useState<UserType>({
     id: 0,
     image: bigDAWG,
@@ -91,7 +102,6 @@ function App() {
           path={feedRoute}
           element={<Feed posts={posts} setPosts={setPosts} />}
         />
-
         <Route
           path={profileRoute}
           element={
@@ -101,6 +111,10 @@ function App() {
               user={user}
             />
           }
+        />
+        <Route
+          path={CreatePostRoute}
+          element={<CreatePost setUserPosts={setUserPosts} />}
         />
       </Routes>
     </div>

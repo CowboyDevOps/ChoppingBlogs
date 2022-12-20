@@ -6,7 +6,7 @@ export type FullPostType = {
 
 export const FullPost = ({ post }: FullPostType) => {
   return (
-    <div className="h-screen w-full mx-3 mt-8 mb-2 flex flex-col items-center justify-start overflow-y-auto">
+    <div className="h-screen w-screen mx-3 mt-8 mb-2 flex flex-col items-center justify-start overflow-y-auto">
       <div className="w-full flex justify-start items-center mb-10">
         <img
           className="w-14 h-14 rounded-full mr-5"

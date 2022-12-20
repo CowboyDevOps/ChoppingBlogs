@@ -16,9 +16,6 @@ export const UserProfile = ({
   setUserPosts,
   user,
 }: UserProfileType) => {
-  const handleDelete = async () => {};
-  const handleEdit = async () => {};
-
   const [currentPost, setCurrentPost] = useState<PostType | undefined>({
     id: -11,
     image: user.image,
@@ -29,19 +26,27 @@ export const UserProfile = ({
     category: "initial category",
   });
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openArticle, setOpenArticle] = useState<boolean>(false);
 
   const handleEditClick = (post: PostType) => {
     setCurrentPost(post);
     setOpenModal(true);
   };
 
-  console.log(currentPost);
-  console.log(openModal);
   return (
     <section className="w-screen h-screen md:flex md:flex-row-reverse overflow-auto">
       <Modal opened={openModal} setOpened={setOpenModal}>
-        <EditPost post={currentPost!} setCurrentPost={setCurrentPost} />
+        <EditPost
+          post={currentPost!}
+          setCurrentPost={setCurrentPost}
+          setAllPosts={setUserPosts}
+          setOpenModal={setOpenModal}
+        />
       </Modal>
+      <Modal opened={openArticle} setOpened={setOpenArticle}>
+        <FullPost post={currentPost!} />
+      </Modal>
+      {/* USER CARD */}
       <div className=" h-full w-full md:w-1/3">
         <div className="flex pt-10 items-start ml-2">
           <img
@@ -57,27 +62,29 @@ export const UserProfile = ({
         </div>
         <div className="mt-10 h-48 flex flex-col items-center">
           <h3 className="self-start text-xl">About</h3>
-          <p className="mt-3 overflow-y-auto border-y-2 w-full border-y-black h-5/6">
+          <p className="mt-3 overflow-y-auto border-y-2 w-full h-5/6">
             {user.about}
           </p>
         </div>
       </div>
-      <div className="bg-red-100 h-full w-full md:w-2/3 lg:w-2/3 overflow-y-auto flex flex-col justify-start items-center">
+      <div className=" h-full w-full md:w-2/3 lg:w-2/3 overflow-y-auto flex flex-col justify-start items-center">
         <h2 className="mt-5 text-2xl">{user.fName}'s Blog Articles</h2>
         {userPosts.map((post: PostType) => {
           return (
-            <div className="w-full h-full flex justify-center mb-2">
+            <div className="w-full h-full flex flex-col border-b items-center mb-16 sm:mb-2">
+              <div className="w-full flex justify-end sm:mr-10">
+                <button
+                  onClick={() => handleEditClick(post)}
+                  className="w-24 h-12 sm:mt-16 sm:mr-10 mt-1 bg-blue-400 rounded-lg"
+                >
+                  Edit
+                </button>
+              </div>
               <Post
                 post={post}
                 setCurrentPost={setCurrentPost}
-                setOpenModal={setOpenModal}
+                setOpenModal={setOpenArticle}
               />
-              <button
-                onClick={() => handleEditClick(post)}
-                className="self-start mt-16 mr-5"
-              >
-                Edit
-              </button>
             </div>
           );
         })}

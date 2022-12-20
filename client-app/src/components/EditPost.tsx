@@ -3,20 +3,17 @@ import { categoryType, PostType } from "../lib/types";
 
 export type EditPostType = {
   post: PostType;
-  setCurrentPost?: React.Dispatch<React.SetStateAction<PostType | undefined>>;
+  setCurrentPost: React.Dispatch<React.SetStateAction<PostType | undefined>>;
+  setAllPosts: React.Dispatch<React.SetStateAction<PostType[]>> | undefined;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
-  const [postForm, setPostForm] = useState<PostType>({
-    id: post.id,
-    author: post.author,
-    image: post.image,
-    title: post.title,
-    date: post.date,
-    content: post.content,
-    category: post.category,
-  });
-
+export const EditPost = ({
+  post,
+  setCurrentPost,
+  setAllPosts,
+  setOpenModal,
+}: EditPostType) => {
   const options: categoryType[] = [
     { name: "Fashion", value: "fashion" },
     { name: "Culinary", value: "culinary" },
@@ -26,7 +23,7 @@ export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setPostForm((prevState) => {
+    setCurrentPost((prevState: any) => {
       return {
         ...prevState,
         [name]: value,
@@ -34,18 +31,53 @@ export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    try {
+      setAllPosts!((prevState: PostType[]) =>
+        prevState.map((entry: PostType) => {
+          if (post.id === entry.id) {
+            return { ...entry, ...post };
+          }
+          return entry;
+        })
+      );
+      alert("Success");
+      setOpenModal(false);
+    } catch (error) {
+      console.log(error);
+      alert("error");
+    }
   };
 
+  const handleDelete = async (e: any) => {
+    e.preventDefault();
+    try {
+      setAllPosts!((prevState: PostType[]) =>
+        prevState.filter((entry) => {
+          return entry.id !== post.id;
+        })
+      );
+      alert("success");
+      setOpenModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form className="w-screen h-screen flex flex-col items-center justify-start mt-5">
+      <button
+        onClick={handleDelete}
+        className="w-32 bg-red-500 rounded-xl h-14 self-start ml-5 hover:underline hover:bg-red-700 focus:bg-red-700"
+      >
+        Delete
+      </button>
       <label className="text-lg">Post Title</label>
       <input
         className="w-96 h-10 rounded-lg"
         type="text"
         name="title"
-        value={postForm.title}
+        value={post.title}
         onChange={handleChange}
       />
       <label className="text-lg">Post Image</label>
@@ -54,7 +86,7 @@ export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
         className="w-96 h-10 rounded-lg"
         type="text"
         name="image"
-        value={postForm.image}
+        value={post.image}
         onChange={handleChange}
       />
       <label className="text-lg">Post Category</label>
@@ -62,7 +94,7 @@ export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
       <select
         name="category"
         className="w-96 h-10 rounded-lg"
-        value={postForm.category}
+        value={post.category}
         onChange={handleChange}
       >
         {options.map((option: categoryType) => {
@@ -73,10 +105,13 @@ export const EditPost = ({ post, setCurrentPost }: EditPostType) => {
       <textarea
         className="resize-none w-full h-full"
         name="content"
-        value={postForm.content}
+        value={post.content}
         onChange={handleChange}
       />
-      <button className="w-48 h-16 rounded-lg mt-5 mb-5 bg-slate-600">
+      <button
+        onClick={handleSubmit}
+        className="w-48 h-16 rounded-lg mt-5 mb-5 bg-slate-600"
+      >
         Finish Editing
       </button>
     </form>

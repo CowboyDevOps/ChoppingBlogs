@@ -17,7 +17,7 @@ export const Post = ({
     setOpenModal?.(true);
   };
   return (
-    <div className="sm:w-3/4 lg:w-1/2 xl:w-2/3 h-72 border-y mt-8 mb-2 flex flex-col items-center justify-center">
+    <div className="sm:w-3/4 lg:w-1/2 xl:w-2/3 h-72 mt-2 mb-8 flex flex-col items-center justify-center">
       <div className="w-full flex justify-start items-center">
         <img
           className="w-14 h-14 rounded-full mr-5"

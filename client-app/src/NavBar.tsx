@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { feedRoute, homeRoute, profileRoute } from "./lib/routes";
-import { LinkType, portType } from "./lib/types";
+import {
+  CreatePostRoute,
+  feedRoute,
+  homeRoute,
+  profileRoute,
+} from "./lib/routes";
+import { LinkType, portType, PostType } from "./lib/types";
 
 export const NavBar = () => {
   const links: LinkType[] = [
     { title: "Home", link: homeRoute },
     { title: "Feed", link: feedRoute },
-    { title: "Home", link: "/" },
+    { title: "Post", link: CreatePostRoute },
     { title: "Home", link: "/" },
     { title: "Profile", link: profileRoute },
   ];

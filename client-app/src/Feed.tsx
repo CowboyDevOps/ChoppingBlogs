@@ -18,9 +18,10 @@ export const Feed = ({ posts, setPosts }: feedType) => {
       <Modal opened={openModal} setOpened={setOpenModal}>
         <FullPost post={currentPost!} />
       </Modal>
+      {/* This will get smaller once we set a design idea on what to put next to it after a certain width in the window */}
       {posts.map((post: PostType) => {
         return (
-          <div className="w-full flex justify-center ">
+          <div className="w-full flex justify-center border-y ">
             <Post
               post={post}
               setCurrentPost={setCurrentPost}
