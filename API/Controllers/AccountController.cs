@@ -68,8 +68,7 @@ namespace API.Controllers
         }
 
       
-        //[Authorize]
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
