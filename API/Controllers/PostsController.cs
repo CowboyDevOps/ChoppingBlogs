@@ -34,7 +34,7 @@ namespace API.Controllers
             post.Id = id;
             return Ok(await Mediator.Send(new Edit.Command { Post = post }));
         }
-        [HttpPut("{id}")] // PUT /api/posts/{id}
+        [HttpDelete("{id}")] // PUT /api/posts/{id}
         public async Task<IActionResult> DeletePost(Guid id)
         {
             return Ok(await Mediator.Send(new Delete.Command { Id = id }));
