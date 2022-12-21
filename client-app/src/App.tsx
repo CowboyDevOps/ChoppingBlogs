@@ -36,24 +36,6 @@ function App() {
       content: loren,
       category: "Post",
     },
-    {
-      id: "b",
-      image: defaultPhoto,
-      author: "Random User",
-      title: "Practice1",
-      date: new Date(),
-      content: loren,
-      category: "Post",
-    },
-    {
-      id: "c",
-      image: bigDAWG,
-      author: "Dan Weiner",
-      title: "Practice",
-      date: new Date(),
-      content: loren,
-      category: "Post",
-    },
   ]);
 
   useEffect(() => {
@@ -81,7 +63,7 @@ function App() {
         })
       );
   }, []);
-
+  console.log(posts);
   const [userPosts, setUserPosts] = useState<PostType[]>(posts);
   useEffect(() => {
     var headers = {};

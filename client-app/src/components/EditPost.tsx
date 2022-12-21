@@ -2,13 +2,29 @@ import { useState } from "react";
 import { categoryType, PostType } from "../lib/types";
 
 async function postUpdatedBlog(dataToSend: PostType) {
-  const headers = {};
+  const headers = { "Content-type": "application/json" };
   const response = await fetch(
     `http://localhost:5000/api/posts/${dataToSend.id}`,
     {
       method: "PUT",
       mode: "cors",
+      headers: headers,
       body: JSON.stringify(dataToSend),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return await response.json();
+}
+async function deleteBlog(dataToSend: PostType) {
+  const response = await fetch(
+    `http://localhost:5000/api/posts/${dataToSend.id}`,
+    {
+      method: "DELETE",
+      mode: "cors",
     }
   );
 
@@ -72,6 +88,7 @@ export const EditPost = ({
   const handleDelete = async (e: any) => {
     e.preventDefault();
     try {
+      await deleteBlog(post);
       setAllPosts!((prevState: PostType[]) =>
         prevState.filter((entry) => {
           return entry.id !== post.id;

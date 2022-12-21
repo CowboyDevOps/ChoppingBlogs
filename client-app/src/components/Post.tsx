@@ -27,7 +27,7 @@ export const Post = ({
         />
         <h2 className="text-sm mr-3">
           {post.author ? post.author : "Anonymous"}
-        </h2>{" "}
+        </h2>
         <h3 className="text-xs font-thin">{post.date.toDateString()}</h3>
       </div>
       <h1 className="text-2xl">{post.title}</h1>

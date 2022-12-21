@@ -42,8 +42,12 @@ export const NavBar = () => {
         <div className="sm:ml-5">Blog Choopin</div>
       )}
       <div className="w-full flex items-center justify-around mr-3 sm:w-1/2 md:w-1/3 sm:mr-5">
-        {links.map((link: LinkType) => {
-          return <Link to={link.link}>{link.title}</Link>;
+        {links.map((link: LinkType, index: number) => {
+          return (
+            <Link key={index} to={link.link}>
+              {link.title}
+            </Link>
+          );
         })}
       </div>
     </section>
