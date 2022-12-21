@@ -10,6 +10,8 @@ import {
   feedRoute,
   profileRoute,
   CreatePostRoute,
+  signUpRoute,
+  logInRoute,
 } from "./lib/routes";
 import Feed from "./Feed";
 import { loren } from "./blogging-text/lorenIpsum";
@@ -17,6 +19,8 @@ import bigDAWG from "./images/bigDAWG.jpeg";
 import defaultPhoto from "./images/defaultPhoto.jpeg";
 import UserProfile from "./UserProfile";
 import CreatePost from "./NewPost";
+import SignUp from "./SignUp";
+import LogIn from "./LogIn";
 
 declare global {
   interface Window {
@@ -37,7 +41,7 @@ function App() {
       category: "Post",
     },
   ]);
-
+  //pull all posts from database
   useEffect(() => {
     var headers = {};
     fetch("http://localhost:5000/api/posts", {
@@ -63,8 +67,9 @@ function App() {
         })
       );
   }, []);
-  console.log(posts);
+
   const [userPosts, setUserPosts] = useState<PostType[]>(posts);
+  //pull all user posts from database
   useEffect(() => {
     var headers = {};
     fetch("http://localhost:5000/api/posts", {
@@ -90,6 +95,7 @@ function App() {
         })
       );
   }, []);
+  //userData
   const [user, setUser] = useState<UserType>({
     id: 0,
     image: bigDAWG,
@@ -98,7 +104,11 @@ function App() {
     about: "Just an MSSA student, trying to live the dream",
     occupation: "Software Engineer",
     company: "Microsoft",
+    email: "",
+    displayName: "Henrik",
+    username: "Henrik",
   });
+
   return (
     <div className="w-screen h-screen">
       <NavBar />
@@ -122,6 +132,10 @@ function App() {
           path={CreatePostRoute}
           element={<CreatePost setUserPosts={setUserPosts} />}
         />
+        {/* AUTH PAGES */}
+        <Route path={signUpRoute} element={<SignUp />} />
+        <Route path={logInRoute} element={<LogIn />} />
+        {/* AUTH PAGES */}
       </Routes>
     </div>
   );
