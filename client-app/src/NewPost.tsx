@@ -1,13 +1,38 @@
 import { useState } from "react";
 import UploadImage from "./components/UploadImage";
 import { PostType, categoryType } from "./lib/types";
+import { v4 as uuidv4 } from "uuid";
+
+async function postBlog(dataToSend: PostType) {
+  const headers = { "Content-type": "application/json" };
+  const response = await fetch(`http://localhost:5000/api/posts`, {
+    method: "POST",
+    mode: "cors",
+    headers: headers,
+    body: JSON.stringify(dataToSend),
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return await response.json();
+}
 
 export type CreatePostType = {
   setUserPosts: React.Dispatch<React.SetStateAction<Array<PostType>>>;
 };
 
 export const CreatePost = ({ setUserPosts }: CreatePostType) => {
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<PostType>({
+    id: uuidv4(),
+    title: "",
+    content: "",
+    category: "",
+    date: new Date(),
+  });
+
+  console.log(post);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -22,6 +47,7 @@ export const CreatePost = ({ setUserPosts }: CreatePostType) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      await postBlog(post);
       setUserPosts!((prevState: any) => {
         return [...prevState, post];
       });
@@ -74,7 +100,14 @@ export const CreatePost = ({ setUserPosts }: CreatePostType) => {
             onChange={handleChange}
           >
             {options.map((option: categoryType) => {
-              return <option value={option.value}>{option.name}</option>;
+              return (
+                <option
+                  key={option.value + option.name + option.value}
+                  value={option.value}
+                >
+                  {option.name}
+                </option>
+              );
             })}
           </select>
         </div>

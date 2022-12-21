@@ -1,4 +1,5 @@
 import { PostType } from "../lib/types";
+import defaultPhoto from "../images/defaultPhoto.jpeg";
 
 export type PostComponentType = {
   post: PostType;
@@ -21,10 +22,12 @@ export const Post = ({
       <div className="w-full flex justify-start items-center">
         <img
           className="w-14 h-14 rounded-full mr-5"
-          src={post.image}
+          src={post.image ? post.image : defaultPhoto}
           alt="author's photo"
         />
-        <h2 className="text-sm mr-3">{post.author}</h2>{" "}
+        <h2 className="text-sm mr-3">
+          {post.author ? post.author : "Anonymous"}
+        </h2>
         <h3 className="text-xs font-thin">{post.date.toDateString()}</h3>
       </div>
       <h1 className="text-2xl">{post.title}</h1>

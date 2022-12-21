@@ -17,9 +17,9 @@ export const UserProfile = ({
   user,
 }: UserProfileType) => {
   const [currentPost, setCurrentPost] = useState<PostType | undefined>({
-    id: -11,
-    image: user.image,
-    author: user.fName + " " + user.lName,
+    id: "d",
+    // image: user.image,
+    // author: user.fName + " " + user.lName,
     title: "Initial Title",
     date: new Date(),
     content: "Initial content",
@@ -71,7 +71,10 @@ export const UserProfile = ({
         <h2 className="mt-5 text-2xl">{user.fName}'s Blog Articles</h2>
         {userPosts.map((post: PostType) => {
           return (
-            <div className="w-full h-full flex flex-col border-b items-center mb-16 sm:mb-2">
+            <div
+              key={post.id}
+              className="w-full h-full flex flex-col border-b items-center mb-16 sm:mb-2"
+            >
               <div className="w-full flex justify-end sm:mr-10">
                 <button
                   onClick={() => handleEditClick(post)}
