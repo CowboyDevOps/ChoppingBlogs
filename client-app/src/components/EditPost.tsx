@@ -1,6 +1,24 @@
 import { useState } from "react";
 import { categoryType, PostType } from "../lib/types";
 
+async function postUpdatedBlog(dataToSend: PostType) {
+  const headers = {};
+  const response = await fetch(
+    `http://localhost:5000/api/posts/${dataToSend.id}`,
+    {
+      method: "PUT",
+      mode: "cors",
+      body: JSON.stringify(dataToSend),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return await response.json();
+}
+
 export type EditPostType = {
   post: PostType;
   setCurrentPost: React.Dispatch<React.SetStateAction<PostType | undefined>>;
@@ -34,6 +52,7 @@ export const EditPost = ({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      await postUpdatedBlog(post);
       setAllPosts!((prevState: PostType[]) =>
         prevState.map((entry: PostType) => {
           if (post.id === entry.id) {

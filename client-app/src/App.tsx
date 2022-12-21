@@ -28,7 +28,7 @@ function App() {
   //if image === undefined, image = defaultPhoto
   const [posts, setPosts] = useState<PostType[]>([
     {
-      id: 0,
+      id: "a",
       author: "Dan Weiner",
       image: bigDAWG,
       title: "Practice",
@@ -37,7 +37,7 @@ function App() {
       category: "Post",
     },
     {
-      id: 1,
+      id: "b",
       image: defaultPhoto,
       author: "Random User",
       title: "Practice1",
@@ -46,7 +46,7 @@ function App() {
       category: "Post",
     },
     {
-      id: 0,
+      id: "c",
       image: bigDAWG,
       author: "Dan Weiner",
       title: "Practice",
@@ -55,35 +55,59 @@ function App() {
       category: "Post",
     },
   ]);
-  const [userPosts, setUserPosts] = useState<PostType[]>([
-    {
-      id: 0,
-      author: "Dan Weiner",
-      image: bigDAWG,
-      title: "Practice",
-      date: new Date(),
-      content: loren,
-      category: "Post",
-    },
-    {
-      id: 1,
-      image: defaultPhoto,
-      author: "Random User",
-      title: "Practice1",
-      date: new Date(),
-      content: loren,
-      category: "Post",
-    },
-    {
-      id: 2,
-      image: bigDAWG,
-      author: "Dan Weiner",
-      title: "Practice",
-      date: new Date(),
-      content: loren,
-      category: "Post",
-    },
-  ]);
+
+  useEffect(() => {
+    var headers = {};
+    fetch("http://localhost:5000/api/posts", {
+      method: "GET",
+      headers: headers,
+      mode: "cors",
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log("error");
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) =>
+        setPosts((prevState) => {
+          return data.map((entry: PostType) => {
+            return {
+              ...entry,
+              date: new Date(entry.date),
+            };
+          });
+        })
+      );
+  }, []);
+
+  const [userPosts, setUserPosts] = useState<PostType[]>(posts);
+  useEffect(() => {
+    var headers = {};
+    fetch("http://localhost:5000/api/posts", {
+      method: "GET",
+      headers: headers,
+      mode: "cors",
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log("error");
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) =>
+        setUserPosts((prevState) => {
+          return data.map((entry: PostType) => {
+            return {
+              ...entry,
+              date: new Date(entry.date),
+            };
+          });
+        })
+      );
+  }, []);
   const [user, setUser] = useState<UserType>({
     id: 0,
     image: bigDAWG,

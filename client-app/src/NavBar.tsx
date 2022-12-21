@@ -13,7 +13,6 @@ export const NavBar = () => {
     { title: "Home", link: homeRoute },
     { title: "Feed", link: feedRoute },
     { title: "Post", link: CreatePostRoute },
-    { title: "Home", link: "/" },
     { title: "Profile", link: profileRoute },
   ];
 

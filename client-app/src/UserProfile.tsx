@@ -17,9 +17,9 @@ export const UserProfile = ({
   user,
 }: UserProfileType) => {
   const [currentPost, setCurrentPost] = useState<PostType | undefined>({
-    id: -11,
-    image: user.image,
-    author: user.fName + " " + user.lName,
+    id: "d",
+    // image: user.image,
+    // author: user.fName + " " + user.lName,
     title: "Initial Title",
     date: new Date(),
     content: "Initial content",
