@@ -17,7 +17,7 @@ export const Modal = ({ opened, setOpened, children }: ModalType) => {
         >
           Close Window
         </div>
-        <div className="sm:w-11/12 w-96 h-auto bg-gray-100 flex justify-center">
+        <div className="sm:w-11/12 shadow-md w-96 h-auto bg-gray-100 flex justify-center">
           {children}
         </div>
       </div>
