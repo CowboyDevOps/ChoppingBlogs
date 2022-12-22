@@ -8,6 +8,12 @@ export type PostType = {
   category: string;
 };
 
+export type CreatorType = {
+  name: string;
+  image: string;
+  stack: string;
+  execute: boolean;
+};
 export type UserType = {
   id?: number;
   image?: string;
