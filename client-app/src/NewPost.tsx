@@ -71,49 +71,29 @@ export const CreatePost = ({ setUserPosts }: CreatePostType) => {
     >
       {/* will have two sides, 1 text inputs, 1 image input using cloudinary*/}
       <div className="w-full h-1/2 flex flex-col sm:flex-row">
-        {" "}
-        <div className="flex flex-col h-full w-1/2 ml-1 sm:ml-5 lg:items-center">
-          {" "}
+        <div className="flex flex-col h-full w-1/2 ml-1 sm:ml-16 lg:items-start">
+          {/* <div> */}
           <label className="text-lg">Post Title</label>
           <input
-            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
+            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-1"
             type="text"
             name="title"
             value={post?.title}
             onChange={handleChange}
           />
-          <label className="text-lg">Post Image</label>
-          {/*Create cloudinary account and use cloudinary image upload tool*/}
-          <input
-            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
-            type="text"
-            name="image"
-            value={post?.image}
-            onChange={handleChange}
-          />
+
           <label className="text-lg">Post Category</label>
           {/* Should be a drop down selector, wait for PMS to give us what type of blog categorys */}
           <select
             name="category"
-            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-5"
+            className="w-96 h-10 rounded-lg bg-white ring ring-slate-300 my-1"
             value={post?.category}
             onChange={handleChange}
-          >
-            {options.map((option: categoryType) => {
-              return (
-                <option
-                  key={option.value + option.name + option.value}
-                  value={option.value}
-                >
-                  {option.name}
-                </option>
-              );
-            })}
-          </select>
+          ></select>
         </div>
+        {/* </div> */}
         <div>{/* <UploadImage post={post!} /> */}</div>
       </div>
-
       <label className="text-lg">Post Content</label>
       <textarea
         className="resize-none lg:w-11/12 w-full h-full bg-white ring ring-slate-300 my-5"

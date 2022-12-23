@@ -8,14 +8,29 @@ export type PostType = {
   category: string;
 };
 
+export type CreatorType = {
+  name: string;
+  image: string;
+  stack: string;
+  execute: boolean;
+};
 export type UserType = {
-  id: number;
+  id?: number;
   image?: string;
-  fName: string;
-  lName: string;
-  about: string;
-  occupation: string;
-  company: string;
+  fName?: string;
+  lName?: string;
+  about?: string;
+  occupation?: string;
+  company?: string;
+  username: string;
+  email: string;
+  password?: string;
+  displayName: string;
+};
+
+export type LogInType = {
+  email: string;
+  password: string;
 };
 
 export type LinkType = {
